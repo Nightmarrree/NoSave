@@ -7,8 +7,8 @@ namespace NoSave
     {
         public static bool IsFirewallEnabled()
         {
-            string output = Cmd("netsh advfirewall show allprofiles state");
-            return !output.Contains("OFF");
+            string output = Cmd("powershell -Command \"(Get-NetFirewallProfile).Enabled\"");
+            return !output.Contains("False");
         }
 
         public static void SetFirewall(bool state)
