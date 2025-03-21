@@ -7,6 +7,7 @@ namespace NoSave
     {
         public string ruleName = "NoSave";
         public string remoteIP = "192.81.241.171";
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -16,7 +17,7 @@ namespace NoSave
                                 "Firewall Error",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Error);
-                Environment.Exit(0);
+                Shutdown();
             }
             MainWindow mainWindow = new MainWindow
             {

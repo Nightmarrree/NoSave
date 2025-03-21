@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoSave"
         mc:Ignorable="d"
+        Loaded="WindowLoaded"
         Title="NoSave" Height="43" Width="100" Topmost="True" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" Background="#FF242424" >
     <Grid>
         <Grid Margin="0,0,0,0" Height="13" Background="#FF1E1E1E" MouseDown="DragWindow" VerticalAlignment="Top">
