@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NoSave.ViewModel
 {
@@ -66,6 +67,15 @@ namespace NoSave.ViewModel
         public MainPageVM()
         {
             _firewallService = new FirewallService();
+            if (!_firewallService.IsFirewallEnabled())
+            {
+                MessageBox.Show("Firewall is disabled! Please enable it in Windows settings.",
+                                "Firewall Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+
+                Application.Current.Shutdown();
+            }
             _hotkeyService = new GlobalHotkeyService();
 
             ToggleRuleCommand = new RelayCommand(
