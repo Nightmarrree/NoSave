@@ -1,0 +1,26 @@
+﻿<Page x:Class="NoSave.View.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NoSave.View"
+      mc:Ignorable="d"
+      d:DesignHeight="30"
+      d:DesignWidth="100"
+      Title="MainPage"
+      Loaded="PageLoaded"
+      Unloaded="PageUnloaded">
+
+    <Grid>
+        <Button Style="{StaticResource DefaultButtonsStyle}"
+                x:Name="Button"
+                Content="{Binding ButtonText}"
+                HorizontalAlignment="Center"
+                Height="20"
+                Width="85"
+                FontFamily="Consolas"
+                Foreground="#FF242424"
+                VerticalAlignment="Center"
+                Command="{Binding ToggleRuleCommand}" />
+    </Grid>
+</Page>
