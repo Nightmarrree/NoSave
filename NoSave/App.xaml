@@ -1,8 +1,7 @@
 ﻿<Application x:Class="NoSave.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:NoSave"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:NoSave">
     <Application.Resources>
         <Style x:Key="HelpButtons" TargetType="{x:Type Button}">
             <Setter Property="Background"
