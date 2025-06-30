@@ -8,10 +8,18 @@ using System.Windows;
 
 namespace NoSave
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            MainWindow mainWindow = new MainWindow
+            {
+                Left = 10,
+                Top = 10
+            };
+            mainWindow.Show();
+        }
     }
 }
