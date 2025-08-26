@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
 
 namespace NoSave.ViewModel
 {
@@ -93,8 +94,23 @@ namespace NoSave.ViewModel
 
         public void RegisterHotkeys()
         {
+            var keyToRegister = Key.F9;
+
+            string configFileName = "hotkey.txt";
+            string configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFileName);
+
+            if (File.Exists(configFilePath))
+            {
+                string keyNameFromFile = File.ReadAllText(configFilePath).Trim();
+
+                if (Enum.TryParse<Key>(keyNameFromFile, true, out Key customKey))
+                {
+                    keyToRegister = customKey;
+                }
+            }
+
             _hotkeyService.HotkeyPressed += OnHotkeyPressed;
-            _hotkeyService.Register(Key.F9);
+            _hotkeyService.Register(keyToRegister);
         }
 
         private async Task ToggleRule()
