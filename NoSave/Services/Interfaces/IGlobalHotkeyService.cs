@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace NoSave.Services.Interfaces
 {
-    public interface IGlobalHotkeyService : IDisposable
+    public interface IGlobalHotkeyService
     {
         event Action HotkeyPressed;
 

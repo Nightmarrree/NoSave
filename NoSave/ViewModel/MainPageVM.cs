@@ -10,7 +10,7 @@ using System.IO;
 
 namespace NoSave.ViewModel
 {
-    public class MainPageVM : ViewModelBase, IDisposable
+    public class MainPageVM : ViewModelBase
     {
         private readonly IFirewallService _firewallService;
         private readonly IGlobalHotkeyService _hotkeyService;
@@ -78,7 +78,6 @@ namespace NoSave.ViewModel
                 Application.Current.Shutdown();
             }
             _hotkeyService = new GlobalHotkeyService();
-
             ToggleRuleCommand = new RelayCommand(
                 execute: async (obj) => await ToggleRule(),
                 canExecute: (obj) => !IsBusy
@@ -160,11 +159,6 @@ namespace NoSave.ViewModel
             {
                 Debug.WriteLine("Command cannot be executed right now.");
             }
-        }
-
-        public void Dispose()
-        {
-            _hotkeyService?.Dispose();
         }
     }
 }

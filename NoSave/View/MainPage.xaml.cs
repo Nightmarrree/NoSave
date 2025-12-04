@@ -18,10 +18,5 @@ namespace NoSave.View
         {
             _vm.RegisterHotkeys();
         }
-
-        private void PageUnloaded(object sender, RoutedEventArgs e)
-        {
-            _vm?.Dispose();
-        }
     }
 }
