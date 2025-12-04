@@ -21,6 +21,7 @@
               VerticalAlignment="Top">
             <TextBlock x:Name="InfoText"
                        Text="?"
+                       MouseDown="OpenM310ClubLink"
                        HorizontalAlignment="Left"
                        Foreground="White"
                        FontFamily="Arial"
