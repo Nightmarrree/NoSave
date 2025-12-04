@@ -1,7 +1,8 @@
-﻿using System.Reflection;
+﻿using NoSave.View;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using NoSave.View;
 
 namespace NoSave
 {
@@ -34,6 +35,11 @@ namespace NoSave
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void OpenM310ClubLink(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://discord.gg/wJAbKFg2Ab");
         }
     }
 }

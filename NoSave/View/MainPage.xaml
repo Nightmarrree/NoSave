@@ -15,6 +15,7 @@
         <Button Style="{StaticResource DefaultButtonsStyle}"
                 x:Name="Button"
                 Content="{Binding ButtonText}"
+                Cursor="Hand"
                 HorizontalAlignment="Center"
                 Height="20"
                 Width="85"
