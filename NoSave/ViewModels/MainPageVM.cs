@@ -1,4 +1,4 @@
-﻿using NoSave.MVVM;
+using NoSave.MVVM;
 using NoSave.Services.Interfaces;
 using NoSave.Services;
 using System.Windows.Input;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.IO;
 
-namespace NoSave.ViewModel
+namespace NoSave.ViewModels
 {
     public class MainPageVM : ViewModelBase
     {

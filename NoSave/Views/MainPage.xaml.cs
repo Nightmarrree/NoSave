@@ -1,8 +1,8 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
-using NoSave.ViewModel;
+using NoSave.ViewModels;
 
-namespace NoSave.View
+namespace NoSave.Views
 {
     public partial class MainPage : Page
     {

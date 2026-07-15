@@ -80,8 +80,8 @@
     <Compile Include="Services\GlobalHotkeyService.cs" />
     <Compile Include="Services\Interfaces\IFirewallService.cs" />
     <Compile Include="Services\Interfaces\IGlobalHotkeyService.cs" />
-    <Compile Include="ViewModel\MainPageVM.cs" />
-    <Compile Include="View\MainPage.xaml.cs">
+    <Compile Include="ViewModels\MainPageVM.cs" />
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -96,7 +96,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
