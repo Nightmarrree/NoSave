@@ -44,6 +44,9 @@ namespace NoSave.Services
 
         public bool Register(Key key)
         {
+            if (_hookId != IntPtr.Zero)
+                return true;
+
             try
             {
                 _hotKeyVk = KeyInterop.VirtualKeyFromKey(key);
@@ -81,6 +84,19 @@ namespace NoSave.Services
                 }
             }
             return CallNextHookEx(_hookId, nCode, wParam, lParam);
+        }
+
+        public void Dispose()
+        {
+            if (_hookId != IntPtr.Zero)
+            {
+                UnhookWindowsHookEx(_hookId);
+                _hookId = IntPtr.Zero;
+            }
+
+            _hookProc = null;
+
+            Debug.WriteLine("Hotkey unregistered.");
         }
     }
 }

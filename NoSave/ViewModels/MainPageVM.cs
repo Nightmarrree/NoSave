@@ -12,11 +12,14 @@ using System.Windows.Input;
 
 namespace NoSave.ViewModels
 {
-    public class MainPageVM : ViewModelBase
+    public class MainPageVM : ViewModelBase, IDisposable
     {
         private readonly IFirewallService _firewallService;
         private readonly FirewallModel _firewallModel;
+
         private readonly IGlobalHotkeyService _hotkeyService;
+        private bool _isHotkeyRegistered;
+
         private string _ruleName = "NoSave";
         private string _remoteIP = "192.81.241.171";
 
@@ -67,6 +70,9 @@ namespace NoSave.ViewModels
 
         public void RegisterHotkeys()
         {
+            if (_isHotkeyRegistered)
+                return;
+
             var keyToRegister = Key.F9;
 
             string configFileName = "hotkey.txt";
@@ -81,9 +87,22 @@ namespace NoSave.ViewModels
                     keyToRegister = customKey;
                 }
             }
+            
+            bool registered = _hotkeyService.Register(keyToRegister);
+
+            if (!registered)
+            {
+                MessageBox.Show(
+                    "Failed to register hotkey. You can still use the button manually.",
+                    "Hotkey error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+
+                return;
+            }
 
             _hotkeyService.HotkeyPressed += OnHotkeyPressed;
-            _hotkeyService.Register(keyToRegister);
+            _isHotkeyRegistered = true;
         }
 
         private async Task ToggleRule()
@@ -143,6 +162,16 @@ namespace NoSave.ViewModels
             {
                 OnPropertyChanged(nameof(ButtonText));
             }
+        }
+
+        public void Dispose()
+        {
+            if (!_isHotkeyRegistered)
+                return;
+
+            _hotkeyService.HotkeyPressed -= OnHotkeyPressed;
+            _hotkeyService.Dispose();
+            _isHotkeyRegistered = false;
         }
     }
 }
