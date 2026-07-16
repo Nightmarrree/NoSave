@@ -1,52 +1,26 @@
+using NoSave.Models;
 using NoSave.MVVM;
-using NoSave.Services.Interfaces;
 using NoSave.Services;
-using System.Windows.Input;
+using NoSave.Services.Interfaces;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.IO;
+using System.Windows.Input;
 
 namespace NoSave.ViewModels
 {
     public class MainPageVM : ViewModelBase
     {
         private readonly IFirewallService _firewallService;
+        private readonly FirewallModel _firewallModel;
         private readonly IGlobalHotkeyService _hotkeyService;
         private string _ruleName = "NoSave";
         private string _remoteIP = "192.81.241.171";
 
-        private string _statusText;
-        private bool _isRuleActive;
         private bool _isBusy;
-
-        public string StatusText
-        {
-            get { return _statusText; }
-            set 
-            {
-                if (_statusText != value) 
-                {
-                    _statusText = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsRuleActive
-        {
-            get { return _isRuleActive; }
-            set
-            {
-                if (_isRuleActive != value)
-                {
-                    _isRuleActive = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(ButtonText));
-                }
-            }
-        }
 
         public bool IsBusy
         {
@@ -61,13 +35,17 @@ namespace NoSave.ViewModels
             }
         }
 
-        public string ButtonText => IsRuleActive ? "Unblock R*" : "Block R*";
+        public string ButtonText => _firewallModel.IsRuleActive ? "Unblock R*" : "Block R*";
 
         public ICommand ToggleRuleCommand { get; }
 
-        public MainPageVM()
+        public MainPageVM(IFirewallService firewallService, FirewallModel firewallModel)
         {
-            _firewallService = new FirewallService();
+            _firewallService = firewallService;
+            _firewallModel = firewallModel;
+
+            _firewallModel.PropertyChanged += OnFirewallModelPropertyChanged;
+
             if (!_firewallService.IsFirewallEnabled())
             {
                 MessageBox.Show("Firewall is disabled! Please enable it in Windows settings.",
@@ -77,18 +55,14 @@ namespace NoSave.ViewModels
 
                 Application.Current.Shutdown();
             }
+
             _hotkeyService = new GlobalHotkeyService();
             ToggleRuleCommand = new RelayCommand(
                 execute: async (obj) => await ToggleRule(),
                 canExecute: (obj) => !IsBusy
             );
 
-            UpdateStatus();
-        }
-
-        public void UpdateStatus()
-        {
-            IsRuleActive = _firewallService.CheckFirewallRule(_ruleName);
+            _firewallModel.UpdateStatus();
         }
 
         public void RegisterHotkeys()
@@ -124,7 +98,7 @@ namespace NoSave.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    if (IsRuleActive)
+                    if (_firewallModel.IsRuleActive)
                     {
                         _firewallService.RemoveRule(_ruleName);
                     }
@@ -142,7 +116,7 @@ namespace NoSave.ViewModels
             finally
             {
                 IsBusy = false;
-                UpdateStatus();
+                _firewallModel.UpdateStatus();
                 (ToggleRuleCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
@@ -158,6 +132,16 @@ namespace NoSave.ViewModels
             else
             {
                 Debug.WriteLine("Command cannot be executed right now.");
+            }
+        }
+
+        private void OnFirewallModelPropertyChanged(
+            object sender,
+            PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(FirewallModel.IsRuleActive))
+            {
+                OnPropertyChanged(nameof(ButtonText));
             }
         }
     }
