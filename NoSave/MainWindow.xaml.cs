@@ -2,6 +2,7 @@ using NoSave.Models;
 using NoSave.Services.Interfaces;
 using NoSave.ViewModels;
 using NoSave.Views;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
@@ -20,6 +21,8 @@ namespace NoSave
             _firewallModel = firewallModel;
 
             InitializeComponent();
+
+            Closing += MainWindowClosing;
 
             DataContext = new MainWindowVM(_firewallModel);
 
@@ -46,12 +49,29 @@ namespace NoSave
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            Close();
         }
 
         private void OpenM310ClubLink(object sender, MouseButtonEventArgs e)
         {
             Process.Start("https://discord.gg/wJAbKFg2Ab");
+        }
+
+        private void MainWindowClosing(object sender, CancelEventArgs e)
+        {
+            if (!_firewallModel.IsRuleActive)
+                return;
+
+            MessageBoxResult result = MessageBox.Show(
+                "Servers are currently blocked.\n\nThe game may not work in online mode until you unblock them.\n\nClose NoSave anyway?",
+                "Servers are blocked",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
