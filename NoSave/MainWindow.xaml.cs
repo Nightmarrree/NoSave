@@ -1,5 +1,6 @@
 using NoSave.Models;
 using NoSave.Services.Interfaces;
+using NoSave.ViewModels;
 using NoSave.Views;
 using System.Diagnostics;
 using System.Reflection;
@@ -17,7 +18,11 @@ namespace NoSave
         {
             _firewallService = firewallService;
             _firewallModel = firewallModel;
+
             InitializeComponent();
+
+            DataContext = new MainWindowVM(_firewallModel);
+
             SetVersionInfo();
             MainFrame.Navigate(new MainPage(_firewallService, _firewallModel));
         }

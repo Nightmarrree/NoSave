@@ -82,6 +82,7 @@
     <Compile Include="Services\Interfaces\IFirewallService.cs" />
     <Compile Include="Services\Interfaces\IGlobalHotkeyService.cs" />
     <Compile Include="ViewModels\MainPageVM.cs" />
+    <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
