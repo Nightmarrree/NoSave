@@ -49,16 +49,6 @@ namespace NoSave.ViewModels
 
             _firewallModel.PropertyChanged += OnFirewallModelPropertyChanged;
 
-            if (!_firewallService.IsFirewallEnabled())
-            {
-                MessageBox.Show("Firewall is disabled! Please enable it in Windows settings.",
-                                "Firewall Error",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-
-                Application.Current.Shutdown();
-            }
-
             _hotkeyService = new GlobalHotkeyService();
             ToggleRuleCommand = new RelayCommand(
                 execute: async (obj) => await ToggleRule(),
