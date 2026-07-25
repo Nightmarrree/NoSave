@@ -2,6 +2,7 @@
 using NoSave.Services;
 using NoSave.Services.Interfaces;
 using NoSave.Services.Localization;
+using System.Diagnostics;
 using System.Windows;
 
 namespace NoSave
@@ -16,6 +17,7 @@ namespace NoSave
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            CloseOtherInstances();
 
             Localization = new LocalizationService(e.Args);
 
@@ -56,6 +58,24 @@ namespace NoSave
                 Top = 10
             };
             mainWindow.Show();
+        }
+
+        private void CloseOtherInstances()
+        {
+            Process currentProcess = Process.GetCurrentProcess();
+            string processName = currentProcess.ProcessName;
+
+            foreach (Process process in Process.GetProcessesByName(processName))
+            {
+                if (process.Id == currentProcess.Id)
+                    continue;
+
+                try
+                {
+                    process.Kill();
+                }
+                catch { }
+            }
         }
     }
 }
