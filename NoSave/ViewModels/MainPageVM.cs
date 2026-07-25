@@ -83,8 +83,8 @@ namespace NoSave.ViewModels
             if (!registered)
             {
                 MessageBox.Show(
-                    "Failed to register hotkey. You can still use the button manually.",
-                    "Hotkey error",
+                    App.Localization.GetString("HotkeyRegisterFailedMessage"),
+                    App.Localization.GetString("HotkeyRegisterFailedTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
 

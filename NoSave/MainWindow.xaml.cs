@@ -63,8 +63,8 @@ namespace NoSave
                 return;
 
             MessageBoxResult result = MessageBox.Show(
-                "Servers are currently blocked.\n\nThe game may not work in online mode until you unblock them.\n\nClose NoSave anyway?",
-                "Servers are blocked",
+                App.Localization.GetString("ServersBlockedCloseWarningMessage"),
+                App.Localization.GetString("ServersBlockedCloseWarningTitle"),
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
 

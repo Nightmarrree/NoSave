@@ -1,18 +1,23 @@
 ﻿using NoSave.Models;
 using NoSave.Services;
 using NoSave.Services.Interfaces;
+using NoSave.Services.Localization;
 using System.Windows;
 
 namespace NoSave
 {
     public partial class App : Application
     {
+        public static LocalizationService Localization { get; private set; }
+
         private IFirewallService _firewallService;
         private FirewallModel _firewallModel;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            Localization = new LocalizationService(e.Args);
 
             _firewallService = new FirewallService();
             _firewallModel = new FirewallModel(_firewallService);
@@ -24,9 +29,8 @@ namespace NoSave
                 if (!firewallConnectivityTest.IsFirewallWorking())
                 {
                     MessageBox.Show(
-                        "NoSave could not verify that Windows Firewall rules are working.\n\n" +
-                        "Please check Windows Firewall or disable third-party firewall software.",
-                        "Firewall Check Failed",
+                        Localization.GetString("FirewallCheckFailedMessage"),
+                        Localization.GetString("FirewallCheckFailedTitle"),
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
 
@@ -37,9 +41,8 @@ namespace NoSave
             else
             {
                 MessageBox.Show(
-                    "NoSave could not connect to the test servers.\n\n" +
-                    "Please check your internet connection and try again.",
-                    "Connection Check Failed",
+                    Localization.GetString("ConnectionCheckFailedMessage"),
+                    Localization.GetString("ConnectionCheckFailedTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
 

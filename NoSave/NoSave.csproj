@@ -77,11 +77,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\FirewallModel.cs" />
+    <Compile Include="Properties\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\FirewallConnectivityTestService.cs" />
     <Compile Include="Services\FirewallService.cs" />
     <Compile Include="Services\GlobalHotkeyService.cs" />
     <Compile Include="Services\Interfaces\IFirewallService.cs" />
     <Compile Include="Services\Interfaces\IGlobalHotkeyService.cs" />
+    <Compile Include="Services\Localization\AppLanguage.cs" />
+    <Compile Include="Services\Localization\LocalizationService.cs" />
     <Compile Include="ViewModels\MainPageVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -123,6 +130,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
